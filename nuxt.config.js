@@ -35,11 +35,52 @@ export default {
     "@nuxtjs/axios",
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
+    "@nuxtjs/auth",
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: "/auth/signin",
+            method: "post",
+            propertyName: "accessToken",
+          },
+          refresh: { url: "/refresh", method: "post", propertyName: "refresh" },
+          user: {
+            url: "/auth/account",
+            method: "get",
+            propertyName: "",
+          },
+          logout: false,
+        },
+        tokenRequired: true,
+        tokenType: "Bearer",
+      },
+    },
+    token: {
+      prefix: "_token.",
+      global: true,
+    },
+    redirect: {
+      login: "/signin",
+      logout: "/signin",
+      callback: "/signin",
+      home: "/home",
+    },
+  },
 
+  router: {
+    // base: "/",
+    middleware: ["auth"],
+  },
+
+  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  axios: {
+    baseURL: process.env.user_service,
+    credentials: false,
+  },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {

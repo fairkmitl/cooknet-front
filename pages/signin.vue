@@ -17,7 +17,7 @@
                     dense
                     label="Username"
                     hint="ค่าเริ่มต้นคือ หมายเลขบัตรประชาชน"
-                    v-model="loginForm.password"
+                    v-model="loginForm.username"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6" class="pa-0">
@@ -42,7 +42,6 @@
               dark
               block
               form="check-login-form"
-              @click="$router.push('/')"
             >
               Sign In
             </v-btn>
@@ -83,8 +82,6 @@ export default {
   mounted() {},
   methods: {
     async login() {
-      this.loginForm.username = this.loginForm.password;
-
       try {
         let resp = await this.$auth
           .loginWith("local", {
@@ -95,9 +92,12 @@ export default {
               this.$nuxt.$loading.finish();
             });
           });
-        this.$router.push({
-          name: "/",
-        });
+
+        if (resp && resp.data && resp.data.accessToken) {
+          this.$router.push("/home");
+        } else {
+          this.alert = true;
+        }
       } catch (e) {
         this.alert = true;
       }
