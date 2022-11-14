@@ -7,6 +7,6 @@ steps:
    args: ['push', 'gcr.io/sw-arch/server']
  # Deploy container image to Cloud Run
  - name: 'gcr.io/cloud-builders/gcloud'
-   args: ['run', 'deploy', 'sw-arch-server', '--image', 'gcr.io/sw-arch/server', '--region', 'asia-southeast1', '--platform', 'managed', '--allow-unauthenticated']
+   args: ['run', 'deploy', 'sw-arch-server', '--image', 'gcr.io/sw-arch/server', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
 images:
 - 'gcr.io/sw-arch/server'
