@@ -3,9 +3,9 @@
     <v-dialog v-model="dialog" persistent width="100%" max-width="600px">
       <v-card class="rounded-lg py-5" align="center">
         <v-card-title>
-          <span class="text-h5 mx-auto">Cooknet</span>
+          <span class="text-h5 mx-auto">Cooknet Sign Up</span>
         </v-card-title>
-        <v-form @submit.prevent="login" id="check-login-form">
+        <v-form @submit.prevent="register" id="register-form">
           <v-card-text class="py-0">
             <v-container class="pt-5">
               <v-row class="pa-0">
@@ -16,8 +16,17 @@
                     outlined
                     dense
                     label="Username"
-                    hint="ค่าเริ่มต้นคือ หมายเลขบัตรประชาชน"
-                    v-model="loginForm.password"
+                    v-model="signupForm.username"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" class="pa-0">
+                  <v-text-field
+                    append-icon="mdi-account"
+                    class="rounded-lg"
+                    outlined
+                    dense
+                    label="Email"
+                    v-model="signupForm.email"
                   ></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="12" md="6" class="pa-0">
@@ -29,7 +38,7 @@
                     outlined
                     dense
                     label="Password"
-                    v-model="loginForm.password"
+                    v-model="signupForm.password"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -41,10 +50,9 @@
               color="primary rounded-lg"
               dark
               block
-              form="check-login-form"
-              @click="$router.push('/login')"
+              form="register-form"
             >
-              Register
+              Sign Up
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -69,37 +77,35 @@
 
 <script>
 export default {
+  auth: false,
   layout: "blank",
   data: () => ({
     alert: false,
-    alert_message: "เข้าสู่ระบบไม่สำเร็จ",
+    alert_message: "ลงทะเบียนไม่สำเร็จ",
     dialog: true,
-    loginForm: {
+    signupForm: {
       username: "",
+      email: "",
       password: "",
     },
     show_password: false,
   }),
   mounted() {},
   methods: {
-    async login() {
-      this.loginForm.username = this.loginForm.password;
+    async register() {
+      this.signupForm["roles"] = ["user"];
 
-      try {
-        let resp = await this.$auth
-          .loginWith("local", {
-            data: this.loginForm,
-          })
-          .finally(() => {
-            this.$nextTick(() => {
-              this.$nuxt.$loading.finish();
-            });
-          });
-        this.$router.push({
-          name: "/",
+      let res = await this.$axios
+        .$post(`/auth/signup`, this.signupForm)
+        .finally(() => {
+          this.$router.push("/signin");
         });
-      } catch (e) {
+      if (res && res.message) {
+        this.alert_message = res.message;
         this.alert = true;
+      } else {
+        this.alert = true;
+        return
       }
     },
   },
