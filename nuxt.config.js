@@ -102,7 +102,7 @@ export default {
       themes: {
         light: {
           primary: "#223F91",
-          secondary: "#EA953B",
+          secondary: "#ef6c00",
           accent: "#8c9eff",
           error: "#ED4732",
           background: "#E5E5E5",

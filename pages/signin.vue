@@ -46,6 +46,11 @@
               Sign In
             </v-btn>
           </v-card-actions>
+          <v-card-actions class="mt-2 px-4">
+            <v-btn color="secondary rounded-lg" dark block @click="signUp()">
+              Sign Up
+            </v-btn>
+          </v-card-actions>
         </v-form>
 
         <v-expand-x-transition>
@@ -101,6 +106,10 @@ export default {
       } catch (e) {
         this.alert = true;
       }
+    },
+    signUp() {
+      console.log("sign up");
+      this.$router.push("/signup");
     },
   },
 };
