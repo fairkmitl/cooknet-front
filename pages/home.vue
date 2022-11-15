@@ -3,7 +3,9 @@
     <div class="d-flex justify-space-between">
       <div>
         <h3>Hello</h3>
-        <span class="text-caption"> Username </span>
+        <span class="text-caption">
+          {{ $auth.user ? $auth.user.username : "Guest" }}
+        </span>
       </div>
       <v-avatar @click="$router.push('/profile')" color="green darken-2">
         <v-icon dark> mdi-account-circle </v-icon>
