@@ -60,7 +60,7 @@ export default {
     this.getRecipe();
     this.getFollowing();
     this.getFollower();
-    console.log(this.$auth.user);
+    // console.log(this.$auth.user);
   },
   methods: {
     async getInformation() {
@@ -68,7 +68,7 @@ export default {
         .$get(`/information/${this.$auth.user.id}`)
         .finally(() => {});
       if (resp) {
-        console.log(resp);
+        // console.log(resp);
         this.information = resp.data;
       } else {
       }
@@ -87,7 +87,7 @@ export default {
         .$get(`/follow/${this.$auth.user.id}/follower`)
         .finally(() => {});
       if (resp) {
-        console.log(resp);
+        // console.log(resp);
         this.follower = resp.data;
       } else {
       }
@@ -99,11 +99,14 @@ export default {
         })
         .finally(() => {});
       if (resp) {
-        this.recipe = resp.filter((el) => el.user.user == this.$auth.user.id);
-        this.recipe = resp.map((el) => ({
+        this.recipe = resp.filter(
+          (el) => el.user.user_id == this.$auth.user.id
+        );
+        this.recipe = this.recipe.map((el) => ({
           ...el,
           src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
         }));
+        // console.log(this.recipe);
       } else {
       }
     },

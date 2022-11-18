@@ -37,7 +37,7 @@ export default {
   created() {},
   computed: {},
   mounted() {
-    this.getFav();
+    // this.getFav();
   },
   components: {},
   watch: {},
@@ -56,23 +56,23 @@ export default {
           this.recipe[index].fav = !this.recipe[index].fav;
         });
     },
-    async getFav() {
-      const resp = await this.$axios
-        .$get(`/fav/${this.$auth.user.id}/favlist`)
-        .finally(() => {});
-      if (resp) {
-        let fav_list = resp.data.map((el) => parseInt(el.recipe_id));
-        for (const r of this.recipe) {
-          if (fav_list.includes(r.id)) {
-            r["fav"] = true;
-          } else {
-            r["fav"] = false;
-          }
-        }
-        console.log(this.recipe);
-      } else {
-      }
-    },
+    // async getFav() {
+    //   const resp = await this.$axios
+    //     .$get(`/fav/${this.$auth.user.id}/favlist`)
+    //     .finally(() => {});
+    //   if (resp) {
+    //     let fav_list = resp.data.map((el) => parseInt(el.recipe_id));
+    //     for (const r of this.recipe) {
+    //       if (fav_list.includes(r.id)) {
+    //         r["fav"] = true;
+    //       } else {
+    //         r["fav"] = false;
+    //       }
+    //     }
+    //     // console.log(this.recipe);
+    //   } else {
+    //   }
+    // },
   },
 };
 </script>
