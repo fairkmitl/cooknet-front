@@ -5,7 +5,7 @@
       fixed
       class="d-flex justify-space-around"
     >
-      <v-btn icon to="/" nuxt>
+      <v-btn icon to="/home" nuxt>
         <v-icon>fas fa-home</v-icon>
       </v-btn>
       <v-btn icon to="/bookmark" nuxt>
@@ -36,6 +36,7 @@
 
 <script>
 export default {
+  auth:false,
   head: () => ({}),
   data: () => ({}),
   created() {},

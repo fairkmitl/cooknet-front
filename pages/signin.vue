@@ -47,7 +47,7 @@
             </v-btn>
           </v-card-actions>
           <v-card-actions class="mt-2 px-4">
-            <v-btn color="secondary rounded-lg" dark block @click="signUp()">
+            <v-btn color="rounded-lg" dark block @click="signUp()">
               Sign Up
             </v-btn>
           </v-card-actions>

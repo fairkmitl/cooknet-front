@@ -15,35 +15,53 @@
       </v-col>
     </v-row>
     <div class="mt-2 d-flex justify-space-around align-center">
-      <v-avatar
-        @click="$router.push('/profile')"
-        color="primary"
-        size="60"
-      >
+      <v-avatar @click="$router.push('/profile')" color="primary" size="60">
         <v-icon dark> mdi-account-circle </v-icon>
       </v-avatar>
       <h4>{{ recipe_detail.user.fullname }}</h4>
       <v-btn dark color="primary">Follow</v-btn>
     </div>
     <br />
-    <div class="d-flex justify-space-around">
-      <v-btn-toggle v-model="tab" tile color="primary" group>
-        <v-btn :value="1"> Ingrident </v-btn>
-        <v-btn :value="2"> Procedure </v-btn>
-      </v-btn-toggle>
-    </div>
-    <v-card
-      v-for="item in 4"
-      :key="item"
-      class="pa-4 mx-auto mb-4"
-      max-width="344"
-      outlined
-    >
-      <div class="d-flex justify-space-between align-center">
-        <v-avatar tile size="80" color="grey"></v-avatar>
-        <h4>xxxxxxx</h4>
-        <span class="text-body1 grey--text">xxx g</span>
-      </div>
+    <v-card>
+      <v-tabs v-model="tab" centered icons-and-text color="primary">
+        <v-tabs-slider></v-tabs-slider>
+        <v-tab href="#tab-1"> Ingredients </v-tab>
+        <v-tab href="#tab-2"> Instructions </v-tab>
+      </v-tabs>
+      <br />
+
+      <v-tabs-items v-model="tab">
+        <v-tab-item v-for="i in 3" :key="i" :value="'tab-1'">
+          <v-card
+            v-for="item in recipe_detail.ingrediants"
+            :key="item"
+            class="pa-4 mx-auto mb-4"
+            max-width="344"
+            outlined
+          >
+            <div class="d-flex justify-space-between align-center">
+              <v-avatar tile size="80" color="grey"></v-avatar>
+              <h4>{{item.name}}</h4>
+              <span class="text-body1 grey--text">{{item.amount}} {{item.unit}}</span>
+            </div>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item v-for="i in 3" :key="i" :value="'tab-2'">
+          <v-card
+            v-for="item in recipe_detail.instructions"
+            :key="item"
+            class="pa-4 mx-auto mb-4"
+            max-width="344"
+            outlined
+          >
+            <div class="d-flex justify-space-between align-center">
+              <v-avatar tile size="80" color="grey"></v-avatar>
+              &emsp;
+              <span class="text-body1 grey--text">{{item.instruction}}</span>
+            </div>
+          </v-card>
+        </v-tab-item>
+      </v-tabs-items>
     </v-card>
   </div>
 </template>
