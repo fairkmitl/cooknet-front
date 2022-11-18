@@ -4,10 +4,10 @@
       <div>
         <h3>Hello</h3>
         <span class="text-caption">
-          {{ $auth.user ? $auth.user.username : "Guest" }}
+          {{ $auth && $auth.user ? $auth.user.username : "Guest" }}
         </span>
       </div>
-      <v-avatar @click="$router.push('/profile')" color="green darken-2">
+      <v-avatar @click="$router.push('/profile')" color="primary">
         <v-icon dark> mdi-account-circle </v-icon>
       </v-avatar>
     </div>
@@ -20,10 +20,11 @@
           gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
           height="200px"
         >
-          <v-card-title v-text="item.title"></v-card-title>
+          <v-card-title v-text="item.name"></v-card-title>
         </v-img>
 
         <v-card-actions>
+          <span class="caption">{{ timeStamp(item.updatedAt) }}</span>
           <v-spacer></v-spacer>
 
           <v-btn icon>
@@ -40,29 +41,32 @@
 </template>
 
 <script>
+const recipeService = process.env.recipe;
+
 export default {
   auth: false,
   data: () => ({
     feeds: [
-      {
-        id: 1,
-        title: "Pre-fab homes",
-        src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      },
-      {
-        id: 2,
-        title: "Favorite road trips",
-        src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      },
-      {
-        id: 3,
-        title: "Best airlines",
-        src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
-      },
+      // {
+      //   id: 1,
+      //   title: "Pre-fab homes",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+      // },
+      // {
+      //   id: 2,
+      //   title: "Favorite road trips",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+      // },
+      // {
+      //   id: 3,
+      //   title: "Best airlines",
+      //   src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+      // },
     ],
   }),
   mounted() {
-    console.log(this.$auth.user);
+    // console.log(this.$auth.user);
+    this.getRecipe();
   },
   methods: {
     recipeDetail(id) {
@@ -70,6 +74,20 @@ export default {
         name: "recipe-id",
         params: { id: id },
       });
+    },
+    async getRecipe() {
+      const resp = await this.$axios
+        .$get(`/feed`, {
+          baseURL: recipeService,
+        })
+        .finally(() => {});
+      if (resp) {
+        this.feeds = resp.map((el) => ({
+          ...el,
+          src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+        }));
+      } else {
+      }
     },
   },
 };

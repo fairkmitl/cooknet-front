@@ -5,7 +5,7 @@
         <h3>Hello</h3>
         <span class="text-caption"> Username </span>
       </div>
-      <v-avatar @click="$router.push('/profile')" color="green darken-2">
+      <v-avatar @click="$router.push('/profile')" color="primary">
         <v-icon dark> mdi-account-circle </v-icon>
       </v-avatar>
     </div>

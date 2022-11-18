@@ -76,6 +76,11 @@ export default {
     middleware: ["auth"],
   },
 
+  env: {
+    user: process.env.user_service,
+    recipe: process.env.recipe_service,
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     baseURL: process.env.user_service,
@@ -101,7 +106,7 @@ export default {
       dark: false,
       themes: {
         light: {
-          primary: "#223F91",
+          primary: "#388E3C",
           secondary: "#ef6c00",
           accent: "#8c9eff",
           error: "#ED4732",

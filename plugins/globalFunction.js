@@ -30,6 +30,13 @@ Vue.mixin({
     //   let result = date.split("T");
     //   return result[0];
     // },
+    timeStamp(d) {
+      if (d) {
+        return moment(d).format("YYYY-MM-DD");
+      } else {
+        return moment().format("YYYY-MM-DD");
+      }
+    },
     dateFormat(d) {
       if (d) {
         return moment(d).format("DD/MM/YYYY");

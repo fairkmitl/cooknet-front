@@ -17,11 +17,11 @@
         absolute
         top
         fab
-        color="white"
+        color="primary"
         to="/recipe/create"
         nuxt
       >
-        <v-icon x-large>fas fa-plus</v-icon>
+        <v-icon x-large color="white">fas fa-plus</v-icon>
       </v-btn>
 
       <v-btn icon to="/recipe/customize" nuxt>

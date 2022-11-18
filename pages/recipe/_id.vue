@@ -1,15 +1,14 @@
 <template>
-  <div>
-    <div align="center">Recipe id : {{ recipe_id }}</div>
-    <br />
+  <div v-if="recipe_detail">
     <v-img
+      contain
       lazy-src="https://picsum.photos/id/11/10/6"
-      src="https://picsum.photos/id/11/500/300"
+      src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
     ></v-img>
     <br />
     <v-row>
       <v-col cols="8">
-        <h3>Spicy chicken burger with French fries</h3>
+        <h3>{{ recipe_detail.name }}</h3>
       </v-col>
       <v-col cols="4">
         <span class="text-body2 grey--text">(13k Reviews)</span>
@@ -18,22 +17,28 @@
     <div class="mt-2 d-flex justify-space-around align-center">
       <v-avatar
         @click="$router.push('/profile')"
-        color="green darken-2"
+        color="primary"
         size="60"
       >
         <v-icon dark> mdi-account-circle </v-icon>
       </v-avatar>
-      <h4>Username</h4>
-      <v-btn dark color="green darken-2">Follow</v-btn>
+      <h4>{{ recipe_detail.user.fullname }}</h4>
+      <v-btn dark color="primary">Follow</v-btn>
     </div>
     <br />
     <div class="d-flex justify-space-around">
-      <v-btn-toggle v-model="tab" tile color="green darken-2" group>
+      <v-btn-toggle v-model="tab" tile color="primary" group>
         <v-btn :value="1"> Ingrident </v-btn>
         <v-btn :value="2"> Procedure </v-btn>
       </v-btn-toggle>
     </div>
-    <v-card v-for="item in 4" :key="item" class="pa-4 mx-auto mb-4" max-width="344" outlined>
+    <v-card
+      v-for="item in 4"
+      :key="item"
+      class="pa-4 mx-auto mb-4"
+      max-width="344"
+      outlined
+    >
       <div class="d-flex justify-space-between align-center">
         <v-avatar tile size="80" color="grey"></v-avatar>
         <h4>xxxxxxx</h4>
@@ -44,7 +49,10 @@
 </template>
 
 <script>
+const recipeService = process.env.recipe;
+
 export default {
+  auth: false,
   head() {},
   data() {
     return {
@@ -58,14 +66,29 @@ export default {
     return {
       recipe_id: id,
       profile: null,
+      recipe_detail: null,
     };
   },
 
-  mounted() {},
+  mounted() {
+    this.recipeDetail();
+  },
   components: {},
   watch: {},
 
-  methods: {},
+  methods: {
+    async recipeDetail() {
+      const resp = await this.$axios
+        .$get(`/recipe/${this.recipe_id}`, {
+          baseURL: recipeService,
+        })
+        .finally(() => {});
+      if (resp) {
+        this.recipe_detail = resp[0];
+      } else {
+      }
+    },
+  },
   computed: {},
 };
 </script>

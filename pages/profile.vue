@@ -3,7 +3,7 @@
     <div class="d-flex justify-space-around align-center">
       <v-avatar
         @click="$router.push('/profile')"
-        color="green darken-2"
+        color="primary"
         size="60"
       >
         <v-icon dark> mdi-account-circle </v-icon>
@@ -27,14 +27,14 @@
       <v-row class="text-caption d-flex">
         <v-col cols="9">
           Private Chef Passionate about food and life 🥘🍲🍝🍱 <br />
-          <v-btn small class="pa-0" text color="green darken-2">More...</v-btn>
+          <v-btn small class="pa-0" text color="primary">More...</v-btn>
         </v-col>
         <v-col></v-col>
       </v-row>
     </div>
 
     <div class="d-flex justify-space-around">
-      <v-btn-toggle v-model="tab" tile color="green darken-2" group>
+      <v-btn-toggle v-model="tab" tile color="primary" group>
         <v-btn :value="1"> Recipe </v-btn>
         <v-btn :value="2"> Videos </v-btn>
         <v-btn :value="3"> Tag </v-btn>
