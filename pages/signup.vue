@@ -19,6 +19,29 @@
                     v-model="signupForm.username"
                   ></v-text-field>
                 </v-col>
+
+                <v-col cols="12" sm="12" md="6" class="pa-0">
+                  <v-text-field
+                    :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
+                    :type="show_password ? 'text' : 'password'"
+                    class="rounded-lg"
+                    @click:append="show_password = !show_password"
+                    outlined
+                    dense
+                    label="Password"
+                    v-model="signupForm.password"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="12" md="6" class="pa-0">
+                  <v-text-field
+                    append-icon="mdi-account"
+                    class="rounded-lg"
+                    outlined
+                    dense
+                    label="Fullname"
+                    v-model="signupForm.fullname"
+                  ></v-text-field>
+                </v-col>
                 <v-col cols="12" sm="12" md="6" class="pa-0">
                   <v-text-field
                     append-icon="mdi-account"
@@ -31,14 +54,12 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6" class="pa-0">
                   <v-text-field
-                    :append-icon="show_password ? 'mdi-eye' : 'mdi-eye-off'"
-                    :type="show_password ? 'text' : 'password'"
+                    append-icon="mdi-account"
                     class="rounded-lg"
-                    @click:append="show_password = !show_password"
                     outlined
                     dense
-                    label="Password"
-                    v-model="signupForm.password"
+                    label="Phone"
+                    v-model="signupForm.phone"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -87,14 +108,14 @@ export default {
       username: "",
       email: "",
       password: "",
+      fullname: "",
+      phone: "",
     },
     show_password: false,
   }),
   mounted() {},
   methods: {
     async register() {
-      this.signupForm["roles"] = ["user"];
-
       let res = await this.$axios
         .$post(`/auth/signup`, this.signupForm)
         .finally(() => {
@@ -105,7 +126,7 @@ export default {
         this.alert = true;
       } else {
         this.alert = true;
-        return
+        return;
       }
     },
   },

@@ -31,25 +31,27 @@
       <br />
 
       <v-tabs-items v-model="tab">
-        <v-tab-item v-for="i in 3" :key="i" :value="'tab-1'">
+        <v-tab-item :value="'tab-1'">
           <v-card
             v-for="item in recipe_detail.ingrediants"
-            :key="item"
+            :key="item.id"
             class="pa-4 mx-auto mb-4"
             max-width="344"
             outlined
           >
             <div class="d-flex justify-space-between align-center">
               <v-avatar tile size="80" color="grey"></v-avatar>
-              <h4>{{item.name}}</h4>
-              <span class="text-body1 grey--text">{{item.amount}} {{item.unit}}</span>
+              <h4>{{ item.name }}</h4>
+              <span class="text-body1 grey--text"
+                >{{ item.amount }} {{ item.unit }}</span
+              >
             </div>
           </v-card>
         </v-tab-item>
-        <v-tab-item v-for="i in 3" :key="i" :value="'tab-2'">
+        <v-tab-item :value="'tab-2'">
           <v-card
             v-for="item in recipe_detail.instructions"
-            :key="item"
+            :key="item.id"
             class="pa-4 mx-auto mb-4"
             max-width="344"
             outlined
@@ -57,7 +59,7 @@
             <div class="d-flex justify-space-between align-center">
               <v-avatar tile size="80" color="grey"></v-avatar>
               &emsp;
-              <span class="text-body1 grey--text">{{item.instruction}}</span>
+              <span class="text-body1 grey--text">{{ item.instruction }}</span>
             </div>
           </v-card>
         </v-tab-item>

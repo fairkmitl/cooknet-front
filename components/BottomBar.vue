@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-bottom-navigation
-      color="indigo"
+      color="primary"
       fixed
       class="d-flex justify-space-around"
     >
