@@ -11,17 +11,8 @@
       <v-btn icon to="/bookmark" nuxt>
         <v-icon>fas fa-bookmark</v-icon>
       </v-btn>
-      <v-btn
-        class="btn-rounded pa-9"
-        dark
-        absolute
-        top
-        fab
-        color="primary"
-        to="/recipe/create"
-        nuxt
-      >
-        <v-icon x-large color="white">fas fa-plus</v-icon>
+      <v-btn icon to="/recipe/create" nuxt>
+        <v-icon x-large>fas fa-plus</v-icon>
       </v-btn>
 
       <v-btn icon to="/recipe/customize" nuxt>
@@ -36,7 +27,7 @@
 
 <script>
 export default {
-  auth:false,
+  auth: false,
   head: () => ({}),
   data: () => ({}),
   created() {},
