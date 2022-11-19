@@ -189,7 +189,7 @@ export default {
     },
     async recipeComment() {
       const resp = await this.$axios
-        .$get(`/recipe/${this.recipe_id}/comments`, {
+        .$get(`/comment/${this.recipe_id}/comments`, {
           baseURL: feedbackService,
         })
         .finally(() => {
@@ -216,7 +216,7 @@ export default {
     async sendFeedback() {
       const resp = await this.$axios
         .$post(
-          `/recipe/${this.recipe_id}/comments/create`,
+          `/comment/${this.recipe_id}/comments/create`,
           {
             user_id: this.$auth.user.id,
             comment: this.new_comment,

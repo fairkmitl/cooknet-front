@@ -176,7 +176,7 @@ export default {
     },
     async getRecipe() {
       const resp = await this.$axios
-        .$get(`/feed`, {
+        .$get(`/feedback`, {
           baseURL: recipeService,
         })
         .finally(() => {});

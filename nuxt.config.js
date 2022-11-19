@@ -76,15 +76,15 @@ export default {
     middleware: ["auth"],
   },
 
-  env: {
-    user: process.env.user_service,
-    recipe: process.env.recipe_service,
-    feedback: process.env.feedback_service,
-  },
+  // env: {
+  //   user: process.env.user_service,
+  //   recipe: process.env.recipe_service,
+  //   feedback: process.env.feedback_service,
+  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: process.env.user_service,
+    baseURL: process.env.api_gateway,
     credentials: false,
   },
   // PWA module configuration: https://go.nuxtjs.dev/pwa
