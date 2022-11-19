@@ -19,7 +19,9 @@
         <v-icon dark> mdi-account-circle </v-icon>
       </v-avatar>
       <h4>{{ recipe_detail.user.fullname }}</h4>
-      <v-btn dark color="primary">Follow</v-btn>
+      <v-btn dark color="primary" @click="follow(recipe_detail.user.user_id)"
+        >Follow</v-btn
+      >
     </div>
     <br />
     <v-card>
@@ -105,6 +107,14 @@ export default {
         .finally(() => {});
       if (resp) {
         this.recipe_detail = resp[0];
+      } else {
+      }
+    },
+    async follow(follow_user_id) {
+      const resp = await this.$axios
+        .$post(`/follow/${this.$auth.user.id}/${follow_user_id}`)
+        .finally(() => {});
+      if (resp) {
       } else {
       }
     },

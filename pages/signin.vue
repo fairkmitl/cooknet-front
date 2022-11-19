@@ -16,7 +16,6 @@
                     outlined
                     dense
                     label="Username"
-                    hint="ค่าเริ่มต้นคือ หมายเลขบัตรประชาชน"
                     v-model="loginForm.username"
                   ></v-text-field>
                 </v-col>
