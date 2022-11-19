@@ -19,11 +19,16 @@
     </div>
     <div class="pa-6" v-if="information">
       <h3>{{ information.fullname }}</h3>
-      <span class="text-caption grey--text">{{
-        timeStamp(information.birthday)
-      }}</span>
-      <br />
-      <span class="text-caption grey--text">{{ information.email }}</span>
+
+      <div class="d-flex align-center">
+        <span class="text-caption grey--text">{{ information.email }}</span>
+        &emsp;
+        <span class="text-caption grey--text">
+          <v-icon small color="primary">mdi-cake-variant-outline</v-icon>
+          {{ timeStamp(information.birthday) }}</span
+        >
+      </div>
+
       <v-row class="text-caption d-flex">
         <v-col cols="9">
           Private Chef Passionate about food and life 🥘🍲🍝🍱 <br />

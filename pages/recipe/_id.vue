@@ -11,16 +11,31 @@
         <h3>{{ recipe_detail.name }}</h3>
       </v-col>
       <v-col cols="4">
-        <span class="text-body2 grey--text">(13k Reviews)</span>
+        <span class="text-body2 grey--text"
+          >({{ recipe_detail.comments.length }} Reviews)</span
+        >
       </v-col>
     </v-row>
-    <div class="mt-2 d-flex justify-space-around align-center">
-      <v-avatar @click="$router.push('/profile')" color="primary" size="60">
-        <v-icon dark> mdi-account-circle </v-icon>
-      </v-avatar>
-      <h4>{{ recipe_detail.user.fullname }}</h4>
-      <v-btn dark color="primary" @click="follow(recipe_detail.user.user_id)"
-        >Follow</v-btn
+    <div class="mt-2 d-flex justify-space-between align-center">
+      <div class="d-flex justify-space-between align-center">
+        <v-avatar @click="$router.push('/profile')" color="primary" size="60">
+          <v-icon dark> mdi-account-circle </v-icon>
+        </v-avatar>
+        &emsp;
+        <div>
+          <h4>{{ recipe_detail.user.fullname }}</h4>
+          <span class="text-caption">
+            {{ timeStamp(recipe_detail.updatedAt) }}
+          </span>
+        </div>
+      </div>
+      <v-btn
+        v-if="$auth && $auth.user.id != recipe_detail.user.user_id"
+        dark
+        color="primary"
+        @click="follow(recipe_detail.user.user_id)"
+      >
+        <v-icon v-if="followed">mdi-check</v-icon>&nbsp; Follow</v-btn
       >
     </div>
     <br />
@@ -67,11 +82,41 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card>
+
+    <div v-if="recipe_detail.comments.length > 0" class="mt-8">
+      <h4>Comments</h4>
+      <v-card
+        v-for="item in recipe_detail.comments"
+        :key="item.id"
+        class="pa-4 mx-auto mb-4"
+        max-width="344"
+        outlined
+      >
+        <div class="d-flex justify-start align-center">
+          <v-avatar tile size="80" color="grey"></v-avatar>&emsp;
+          <div>
+            <v-row class="pa-0 ma-0">
+              <span class="text-body-2">{{ item.comment }}</span>
+            </v-row>
+            <div class="d-flex justify-space-between">
+              <span class="text-caption grey--text">
+                {{ timeStamp(item.createdAt) }}
+              </span>
+              <v-icon small color="success" v-if="item.sentiment == 'positive'"
+                >mdi-thumb-up</v-icon
+              >
+              <v-icon small color="error" v-else>mdi-thumb-down</v-icon>
+            </div>
+          </div>
+        </div>
+      </v-card>
+    </div>
   </div>
 </template>
 
 <script>
 const recipeService = process.env.recipe;
+const feedbackService = process.env.feedback;
 
 export default {
   auth: false,
@@ -89,11 +134,13 @@ export default {
       recipe_id: id,
       profile: null,
       recipe_detail: null,
+      comments: [],
+      followed: false,
     };
   },
 
   mounted() {
-    this.recipeDetail();
+    this.recipeComment();
   },
   components: {},
   watch: {},
@@ -104,9 +151,12 @@ export default {
         .$get(`/recipe/${this.recipe_id}`, {
           baseURL: recipeService,
         })
-        .finally(() => {});
+        .finally(() => {
+          this.getFollowing();
+        });
       if (resp) {
         this.recipe_detail = resp[0];
+        this.recipe_detail["comments"] = this.comments;
       } else {
       }
     },
@@ -115,6 +165,33 @@ export default {
         .$post(`/follow/${this.$auth.user.id}/${follow_user_id}`)
         .finally(() => {});
       if (resp) {
+        this.followed = true;
+      } else {
+      }
+    },
+    async recipeComment() {
+      const resp = await this.$axios
+        .$get(`/recipe/${this.recipe_id}/comments`, {
+          baseURL: feedbackService,
+        })
+        .finally(() => {
+          this.recipeDetail();
+        });
+      if (resp) {
+        this.comments = resp.data;
+      } else {
+      }
+    },
+    async getFollowing() {
+      const resp = await this.$axios
+        .$get(`/follow/${this.$auth.user.id}/following`)
+        .finally(() => {});
+      if (resp) {
+        // console.log(resp.data);
+        let following = resp.data.map((el) => el.following_user_id);
+        console.log(following);
+        console.log(this.recipe_detail.user.user_id);
+        this.followed = following.includes(this.recipe_detail.user.user_id);
       } else {
       }
     },
