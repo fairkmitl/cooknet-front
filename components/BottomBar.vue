@@ -21,7 +21,7 @@
       <v-btn icon to="/profile" nuxt>
         <v-icon>fas fa-user-alt</v-icon>
       </v-btn>
-        <v-btn icon @click="logout()">
+        <v-btn icon @click="logout()" color="error">
         <v-icon>fas fa-sign-out</v-icon>
       </v-btn>
     </v-bottom-navigation>
