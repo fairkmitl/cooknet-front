@@ -30,7 +30,9 @@
         </div>
       </div>
       <v-btn
-        v-if="$auth && $auth.user.id != recipe_detail.user.user_id"
+        v-if="
+          $auth && $auth.user && $auth.user.id != recipe_detail.user.user_id
+        "
         dark
         color="primary"
         @click="follow(recipe_detail.user.user_id)"
@@ -111,6 +113,19 @@
         </div>
       </v-card>
     </div>
+
+    <div v-if="$auth && $auth.user">
+      <h4>send feedback</h4>
+      <v-textarea
+        v-model="new_comment"
+        rows="2"
+        outlined
+        dense
+        hide-details
+      ></v-textarea>
+      <br />
+      <v-btn block @click="sendFeedback()" color="primary">Send feedback</v-btn>
+    </div>
   </div>
 </template>
 
@@ -136,6 +151,7 @@ export default {
       recipe_detail: null,
       comments: [],
       followed: false,
+      new_comment: "",
     };
   },
 
@@ -152,7 +168,9 @@ export default {
           baseURL: recipeService,
         })
         .finally(() => {
-          this.getFollowing();
+          if (this.$auth && this.$auth.user && this.$auth.user.id) {
+            this.getFollowing();
+          }
         });
       if (resp) {
         this.recipe_detail = resp[0];
@@ -192,6 +210,26 @@ export default {
         console.log(following);
         console.log(this.recipe_detail.user.user_id);
         this.followed = following.includes(this.recipe_detail.user.user_id);
+      } else {
+      }
+    },
+    async sendFeedback() {
+      const resp = await this.$axios
+        .$post(
+          `/recipe/${this.recipe_id}/comments/create`,
+          {
+            user_id: this.$auth.user.id,
+            comment: this.new_comment,
+          },
+          {
+            baseURL: feedbackService,
+          }
+        )
+        .finally(() => {
+          this.new_comment = "";
+          this.recipeComment();
+        });
+      if (resp) {
       } else {
       }
     },

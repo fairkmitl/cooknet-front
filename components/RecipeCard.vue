@@ -16,7 +16,7 @@
           <span class="text-caption">{{ item.description }}</span>
           <v-spacer></v-spacer>
           <span class="text-caption">{{ timeStamp(item.updatedAt) }}</span>
-          <v-btn icon @click="favRecipe(item.id)">
+          <v-btn icon @click="favRecipe(item.id)"  v-if="$auth && $auth.user && $auth.user.id">
             <v-icon :color="item.fav ? 'primary' : ''">mdi-bookmark</v-icon>
           </v-btn>
           <!-- <v-btn icon>

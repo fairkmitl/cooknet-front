@@ -27,7 +27,12 @@ export default {
   }),
   mounted() {
     // console.log(this.$auth.user);
-    this.getFav();
+    if (this.$auth && this.$auth.user && this.$auth.user.id) {
+      this.getFav();
+    }
+    else{
+      this.getRecipe()
+    }
   },
   methods: {
     async getFav() {

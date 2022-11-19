@@ -34,7 +34,7 @@
           Private Chef Passionate about food and life 🥘🍲🍝🍱 <br />
           <!-- <v-btn small class="pa-0" text color="primary">More...</v-btn> -->
         </v-col>
-        <v-col></v-col>
+        <!-- <v-col></v-col> -->
       </v-row>
     </div>
 
