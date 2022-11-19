@@ -19,9 +19,9 @@
           <v-btn icon @click="favRecipe(item.id)">
             <v-icon :color="item.fav ? 'primary' : ''">mdi-bookmark</v-icon>
           </v-btn>
-          <v-btn icon>
+          <!-- <v-btn icon>
             <v-icon>mdi-share-variant</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-card-actions>
       </v-card>
     </v-col>
@@ -36,9 +36,7 @@ export default {
   data: () => ({}),
   created() {},
   computed: {},
-  mounted() {
-    // this.getFav();
-  },
+  mounted() {},
   components: {},
   watch: {},
   methods: {
@@ -56,23 +54,6 @@ export default {
           this.recipe[index].fav = !this.recipe[index].fav;
         });
     },
-    // async getFav() {
-    //   const resp = await this.$axios
-    //     .$get(`/fav/${this.$auth.user.id}/favlist`)
-    //     .finally(() => {});
-    //   if (resp) {
-    //     let fav_list = resp.data.map((el) => parseInt(el.recipe_id));
-    //     for (const r of this.recipe) {
-    //       if (fav_list.includes(r.id)) {
-    //         r["fav"] = true;
-    //       } else {
-    //         r["fav"] = false;
-    //       }
-    //     }
-    //     // console.log(this.recipe);
-    //   } else {
-    //   }
-    // },
   },
 };
 </script>

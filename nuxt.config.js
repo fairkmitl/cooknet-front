@@ -79,6 +79,7 @@ export default {
   env: {
     user: process.env.user_service,
     recipe: process.env.recipe_service,
+    feedback: process.env.feedback_service,
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

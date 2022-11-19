@@ -23,24 +23,43 @@ export default {
   auth: false,
   data: () => ({
     feeds: [],
+    fav_list: [],
   }),
   mounted() {
     // console.log(this.$auth.user);
-    this.getRecipe();
+    this.getFav();
   },
   methods: {
+    async getFav() {
+      const resp = await this.$axios
+        .$get(`/fav/${this.$auth.user.id}/favlist`)
+        .finally(() => {
+          this.getRecipe();
+        });
+      if (resp) {
+        this.fav_list = resp.data.map((el) => parseInt(el.recipe_id));
+      } else {
+      }
+    },
     async getRecipe() {
       const resp = await this.$axios
         .$get(`/feed`, {
           baseURL: recipeService,
         })
-        .finally(() => {
-        });
+        .finally(() => {});
       if (resp) {
         this.feeds = resp.map((el) => ({
           ...el,
           src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
         }));
+        for (const r of this.feeds) {
+          if (this.fav_list.includes(r.id)) {
+            r["fav"] = true;
+          } else {
+            r["fav"] = false;
+          }
+        }
+        console.log(this.feeds);
       } else {
       }
     },

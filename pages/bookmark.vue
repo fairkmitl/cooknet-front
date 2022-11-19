@@ -44,6 +44,7 @@ export default {
         this.recipes = resp.map((el) => ({
           ...el,
           src: "https://cdn.vuetifyjs.com/images/cards/cooking.png",
+          fav: true
         }));
       } else {
       }

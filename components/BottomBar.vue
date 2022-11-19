@@ -15,9 +15,9 @@
         <v-icon x-large>fas fa-plus</v-icon>
       </v-btn>
 
-      <v-btn icon to="/recipe/customize" nuxt>
+      <!-- <v-btn icon to="/recipe/customize" nuxt>
         <v-icon>fas fa-utensils</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-btn icon to="/profile" nuxt>
         <v-icon>fas fa-user-alt</v-icon>
       </v-btn>
