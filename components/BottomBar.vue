@@ -21,6 +21,9 @@
       <v-btn icon to="/profile" nuxt>
         <v-icon>fas fa-user-alt</v-icon>
       </v-btn>
+        <v-btn icon @click="logout()">
+        <v-icon>fas fa-sign-out</v-icon>
+      </v-btn>
     </v-bottom-navigation>
   </div>
 </template>
@@ -35,7 +38,18 @@ export default {
 
   components: {},
   watch: {},
-  methods: {},
+  methods: {
+    async logout() {
+      try {
+        await this.$auth.logout();
+        this.$router.push({
+          path: "/signin",
+        });
+      } catch (e) {
+        // this.$router.push("/");
+      }
+    },
+  },
 };
 </script>
 <style scoped>
