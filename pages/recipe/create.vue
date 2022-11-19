@@ -13,6 +13,15 @@
       dense
       v-model="recipe_detail.name"
     ></v-text-field>
+    <v-select
+      v-model="recipe_detail.category_id"
+      :items="categories"
+      label="category"
+      outlined
+      item-text="name"
+      item-value="id"
+      dense
+    ></v-select>
     <v-textarea
       rows="2"
       label="Description ...."
@@ -94,6 +103,7 @@ export default {
   head() {},
   data() {
     return {
+      categories: [],
       options: [],
       unit_options: [
         {
@@ -105,12 +115,26 @@ export default {
           name: "item",
         },
       ],
+      // tools_option: [
+      //   {
+      //     tool_id: 1,
+      //     name: "Microwave",
+      //   },
+      //   {
+      //     tool_id: 2,
+      //     name: "Oven",
+      //   },
+      //   {
+      //     tool_id: 4,
+      //     name: "Oven",
+      //   },
+      // ],
       recipe_detail: {
         name: "Tom sab",
         description: "Yummy thai food",
         image_url: null,
         user_id: "",
-        category_id: 2,
+        category_id: 1,
         ingrediants: [
           {
             ingrediant_id: 1,
@@ -160,12 +184,28 @@ export default {
   },
 
   mounted() {
+    this.getCategory();
     this.getIngrident();
   },
   components: {},
   watch: {},
 
   methods: {
+    async getCategory() {
+      const resp = await this.$axios
+        .$get(`/category`, {
+          baseURL: recipeService,
+        })
+        .finally(() => {});
+      if (resp) {
+        this.categories = resp;
+        this.categories = resp.map((el) => ({
+          ...el,
+          category_id: el.id,
+        }));
+      } else {
+      }
+    },
     async getIngrident() {
       const resp = await this.$axios
         .$get(`/ingrediant`, {
@@ -196,7 +236,7 @@ export default {
       });
     },
     async createRecipe() {
-      this.recipe_detail.user_id = this.$auth.user.id
+      this.recipe_detail.user_id = this.$auth.user.id;
       const resp = await this.$axios
         .$post(`/recipe`, this.recipe_detail, {
           baseURL: recipeService,
